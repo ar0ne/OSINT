@@ -1,0 +1,45 @@
+---
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    user: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: "osint_db"
+    ports:
+      - "5432:5432"
+    volumes:
+      - osint_db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # backend:
+  #   build:
+  #     context: backend/
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   # ports:
+  #   #   - "8888:8888"
+  #   environment:
+  #     DB_HOST: db
+  #   expose:
+  #     - "8888"
+  #
+  # frontend:
+  #   build:
+  #     context: frontend/
+  #   ports:
+  #     - "3000:80"
+  #   environment:
+  #     SERVER_ROOT: "http://backend"
+  #     SERVER_PORT: 4000
+
+
+volumes:
+  osint_db:

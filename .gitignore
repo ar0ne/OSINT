@@ -1,0 +1,16 @@
+venv/
+.venv/
+.idea/
+.env
+.env*.local
+.env*.production
+.env*.staging
+.mypy_cache/
+node_modules/
+__pycache__/
+db.sqlite*
+build/
+.pytest_cache/
+.vscode
+
+.env
