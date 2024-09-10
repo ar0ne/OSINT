@@ -2,7 +2,7 @@ from app.enums import AppEnum
 
 
 class ScanStatus(AppEnum):
-    created = "Created"
-    in_progress = "In Progress"
+    new = "New"
+    in_progress = "InProgress"
     succeeded = "Succeeded"
     failed = "Failed"

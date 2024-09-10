@@ -4,7 +4,7 @@ from sqlalchemy_filters import apply_pagination
 
 from app import config
 
-from .models import Scan, ScanCreate, ScanPagination
+from .models import Scan, ScanCreate, ScanPagination, ScanStatus
 
 
 def get(*, db_session, scan_id: int) -> Optional[Scan]:
@@ -12,7 +12,9 @@ def get(*, db_session, scan_id: int) -> Optional[Scan]:
     return db_session.query(Scan).filter(Scan.id == scan_id).first()
 
 
-def get_paginated(*, db_session, page: int | None, items_per_page: int | None) -> ScanPagination:
+def get_paginated(
+    *, db_session, page: int | None, items_per_page: int | None
+) -> ScanPagination:
     """returns page of scans"""
     query = db_session.query(Scan)
     if not page:
@@ -20,7 +22,8 @@ def get_paginated(*, db_session, page: int | None, items_per_page: int | None) -
     if not items_per_page:
         items_per_page = config.PAGINATION_PAGE_SIZE
 
-    paginated_query, pagination = apply_pagination(query, page_number=page, page_size=items_per_page)
+    paginated_query, pagination = apply_pagination(
+        query, page_number=page, page_size=items_per_page)
 
     return {
         "items": paginated_query.all(),
@@ -33,6 +36,9 @@ def get_paginated(*, db_session, page: int | None, items_per_page: int | None) -
 def create(*, db_session, scan_in: ScanCreate) -> Scan:
     """Create a new scan"""
     scan = Scan(
+        domain=scan_in.domain,
+        tool=scan_in.tool,
+        status=ScanStatus.new,
     )
 
     db_session.add(scan)
