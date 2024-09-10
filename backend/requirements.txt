@@ -7,3 +7,6 @@ sqlalchemy
 sqlalchemy-filters
 pydantic
 validators
+celery
+redis
+python-dotenv

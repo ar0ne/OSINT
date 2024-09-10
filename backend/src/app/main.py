@@ -5,7 +5,7 @@ from uuid import uuid1
 
 from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
-from sqlalchemy import inspect
+
 from sqlalchemy.orm import scoped_session
 from starlette.requests import Request
 from starlette.routing import compile_path

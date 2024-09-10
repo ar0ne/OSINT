@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import APIRouter, BackgroundTasks, HTTPException, status
+from fastapi import APIRouter, HTTPException, status
 
 from app.database.core import DbSession
 from app.models import PrimaryKey
@@ -55,11 +55,9 @@ def get_scan(
 def create_scan(
     db_session: DbSession,
     scan_in: ScanCreate,
-    background_tasks: BackgroundTasks,
+    
 ):
     """Creates new scan"""
     scan = create(db_session=db_session, scan_in=scan_in)
-    background_tasks.add_task(
-        schedule_scan, scan_id=scan.id
-    )
+    schedule_scan.delay(scan_id=scan.id)
     return scan
