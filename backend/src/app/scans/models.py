@@ -21,7 +21,7 @@ class Scan(Base, TimeStampMixin):
 
 class ScanRead(AppBaseModel):
     id: PrimaryKey
-    status: Optional[str]
+    status: str
     data: Optional[str]
     domain: str
     tool: str
@@ -52,3 +52,8 @@ class ScanCreate(AppBaseModel):
         if domain(v) is not True:
             raise ValueError("invalid domain")
         return v
+
+
+class ScanUpdate(AppBaseModel):
+    data: Optional[str]
+    status: str

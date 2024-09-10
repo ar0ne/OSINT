@@ -4,7 +4,7 @@ from sqlalchemy_filters import apply_pagination
 
 from app import config
 
-from .models import Scan, ScanCreate, ScanPagination, ScanStatus
+from .models import Scan, ScanCreate, ScanPagination, ScanStatus, ScanUpdate
 
 
 def get(*, db_session, scan_id: int) -> Optional[Scan]:
@@ -40,6 +40,17 @@ def create(*, db_session, scan_in: ScanCreate) -> Scan:
         tool=scan_in.tool,
         status=ScanStatus.new,
     )
+
+    db_session.add(scan)
+    db_session.commit()
+
+    return scan
+
+
+def update(*, db_session, scan: Scan, scan_in: ScanUpdate) -> Scan:
+
+    scan.data = scan_in.data
+    scan.status = scan_in.status
 
     db_session.add(scan)
     db_session.commit()
