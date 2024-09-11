@@ -1,9 +1,8 @@
 'use client'
 
-import styles from "@/app/ui/card/card.module.css"
+import styles from "@/app/ui/card/card.module.css";
 
 export default function Pagination ({totalPages, currentPage, onClick}) {
-
   if (!totalPages) return;
 
   const pageNumbers = Array.from({length: totalPages}, (x, i) => i);

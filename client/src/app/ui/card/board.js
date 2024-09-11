@@ -3,14 +3,16 @@
 
 import styles from "@/app/ui/card/card.module.css";
 import {useState} from "react";
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
 import Card from "@/app/ui/card/card";
 import Pagination from "@/app/ui/card/pagination";
 
-
 const CardBoard = ({scans}) => {
 
-  //const [page, setPage] = useState(1);
-
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const getCards = (scans) => {
     if (!scans) return (<h1>...</h1>);
@@ -35,9 +37,9 @@ const CardBoard = ({scans}) => {
       <p className={styles.title}>- - - - </p>
       {cards}
       <Pagination
-        totalPages={3}
-        currentPage={1}
-        onClick={console.log}
+        totalPages={scans.total / scans.count}
+        currentPage={scans.page}
+        onClick={(p) => replace(`${pathname}?page=${p}`)}
       />
     </div>
   )
