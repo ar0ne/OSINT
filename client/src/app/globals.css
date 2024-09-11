@@ -18,6 +18,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+button {
+  color: #149414;
+}
+
+.bold {
+  font-family: var(--font-hack-bold);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

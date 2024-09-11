@@ -1,15 +1,17 @@
-import Image from "next/image";
 import styles from "./page.module.css";
-import { fetchScanData } from "@/app/lib/data";
 import CardBoard from "@/app/ui/card/board";
+import { fetchScanData } from "@/app/lib/data";
+import NewScanButton from "@/app/ui/buttons/newscan";
 
 export default async function Home() {
-  const scans = await fetchScanData();
-  const items = scans.items;
+  var page = 1;
+  const scans = await fetchScanData(page);
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <CardBoard items={items} />
+        <NewScanButton  />
+        <CardBoard scans={scans}/>
       </main>
       <footer className={styles.footer}>
       </footer>

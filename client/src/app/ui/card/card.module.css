@@ -36,15 +36,13 @@
   flex: 1;
 }
 
-.controls {
+.pagination {
   display: flex;
   flex-direction: row;
   gap: 5em;
   align-content: center;
   align-items: center;
   justify-content: center;
-  padding: 2em;
-
 }
 
 .button {
