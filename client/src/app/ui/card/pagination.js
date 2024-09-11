@@ -1,21 +1,31 @@
 'use client'
 
 import styles from "@/app/ui/card/card.module.css";
+import { generatePagination } from "@/app/lib/utils";
 
 export default function Pagination ({totalPages, currentPage, onClick}) {
   if (!totalPages) return;
 
-  const pageNumbers = Array.from({length: totalPages}, (x, i) => i);
+  const pagination = generatePagination(currentPage, totalPages);
+
+  const handleOnClick = (page, idx) => {
+    if (currentPage !== page){
+      if (page === "...") {
+        page = Math.floor((pagination[idx - 1] + pagination[idx + 1] ) / 2);
+      }
+      onClick(page);
+    }
+  }
 
   return (
     <div className={styles.pagination}>
-      {pageNumbers.map((i) =>  
+      {pagination.map((page, idx) =>  
         <button
-          key={i}
-          className={`${styles.button} ${i + 1 === currentPage ? styles.currentbutton : ''} `}
-          onClick={() => currentPage !== i + 1 ? onClick(i + 1) : undefined}
+          key={idx}
+          className={`${styles.button} ${page === currentPage ? styles.currentbutton : ''} `}
+          onClick={() => handleOnClick(page, idx)}
           >
-        {i + 1}
+        {page}
         </button>
       )}
     </div>
