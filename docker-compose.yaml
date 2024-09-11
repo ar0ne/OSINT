@@ -7,11 +7,11 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: "osint_db"
+      POSTGRES_DB: "scanapp_db"
     ports:
       - "5432:5432"
     volumes:
-      - osint_db:/var/lib/postgresql
+      - scanapp_db:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready"]
       interval: 5s
@@ -30,9 +30,9 @@ services:
     ports:
       - "6379:6379"
 
-  # backend:
+  # api:
   #   build:
-  #     context: backend/
+  #     context: api/
   #   depends_on:
   #     db:
   #       condition: service_healthy
@@ -43,15 +43,15 @@ services:
   #   expose:
   #     - "8888"
   #
-  # frontend:
+  # client:
   #   build:
-  #     context: frontend/
+  #     context: client/
   #   ports:
   #     - "3000:80"
   #   environment:
-  #     SERVER_ROOT: "http://backend"
+  #     SERVER_ROOT: "http://api"
   #     SERVER_PORT: 4000
 
 
 volumes:
-  osint_db:
+  scanapp_db:
