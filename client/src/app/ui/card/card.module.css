@@ -1,0 +1,70 @@
+.cardboard {
+  margin: 1em;
+  border: 1px solid green;
+}
+
+.cardboard h1 {
+  margin-top: 0.7em;
+  margin-left: 0.5em;
+}
+
+.cardboard > .title {
+  margin-left: 1em;
+}
+
+.card {
+  border-bottom: 1px solid #9ccc9c;
+  margin: 0.2em 1em 0.2em 1em;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+.card:hover {
+  opacity: 1;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  gap: 5em;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+
+}
+
+.button {
+  margin: 1em;
+  padding: 0.7em;
+  background-color: #000;
+  border: 1px solid #9ccc9c;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+.currentbutton {
+  background-color: #649568; 
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+}
