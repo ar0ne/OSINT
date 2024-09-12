@@ -14,6 +14,7 @@ import Modal from "@/app/ui/modal/modal";
 
 const Table = ({scans}) => {
   const { replace } = useRouter();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [card, setCard] = useState(null);
@@ -33,7 +34,6 @@ const Table = ({scans}) => {
     }
   }, [scanId]);
 
-
   const getCards = (scans) => {
     if (!scans) return (<h1>...</h1>);
     return (
@@ -49,6 +49,11 @@ const Table = ({scans}) => {
     );
   };
 
+  const onCloseModal = () => {
+    setScanId(null);
+    router.refresh(); 
+  }
+
   const cards = getCards(scans);
   const totalPages = scans ? Math.floor(scans.total / scans.count) : 0;
   const currentPage = scans ? scans.page : 1
@@ -60,7 +65,7 @@ const Table = ({scans}) => {
       {cards}
       {card && <Modal
         isOpen={true} 
-        onClose={() => setScanId(null)}
+        onClose={onCloseModal}
         title="Scan results"
         >
           <CardDetails {...card} />

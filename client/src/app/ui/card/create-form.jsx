@@ -93,7 +93,7 @@ export default function Form({onClose}) {
           </div>
 
         </div>
-        <Button type="submit">Create Invoice</Button>
+        <Button type="submit">Start scan</Button>
       </div>
     </form>
   );

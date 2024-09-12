@@ -2,7 +2,6 @@
 
 import { z } from 'zod';
 const axios = require("axios");
-import { revalidatePath } from 'next/cache'
 
 const FormSchema = z.object({
   tool: z.string(),
@@ -10,6 +9,8 @@ const FormSchema = z.object({
 });
 
 const CreateInvoice = FormSchema.omit({});
+
+const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 
 export async function createScan (prevState, formData) {
   
@@ -27,7 +28,7 @@ export async function createScan (prevState, formData) {
 
   const { tool, domain } = validatedFields.data;
 
-  var result = await axios.post("http://0.0.0.0:8000/api/v1/scans/", 
+  var result = await axios.post(HOST_URL + "/scans/", 
     {tool: tool, domain: domain}
   ).then(resp => resp.data
   ).catch(err => err.response);
@@ -37,8 +38,5 @@ export async function createScan (prevState, formData) {
       message: result.data?.detail
     }
   }
-
-  revalidatePath("");
-
 }
 
