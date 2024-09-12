@@ -2,19 +2,20 @@
 
 import Modal from "@/app/ui/modal/modal";
 import {useState} from "react";
+import Button from "@/app/ui/button";
 
 
-export default function NewScanButton ({onClick}) {
+export default function NewScan ({onClick}) {
 
   const [open, setOpen] = useState(false);
 
   return (
     <div>
-      <button 
+      <Button 
         onClick={() => setOpen(true)}
         >
         New scan
-      </button>
+      </Button>
       <Modal 
         isOpen={open} 
         onClose={() => setOpen(false)}

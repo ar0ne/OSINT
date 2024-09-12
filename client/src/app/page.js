@@ -1,7 +1,7 @@
 import styles from "./page.module.css";
-import CardBoard from "@/app/ui/card/board";
+import Table from "@/app/ui/card/table";
 import { fetchScanPage } from "@/app/lib/data";
-import NewScanButton from "@/app/ui/buttons/newscan";
+import NewScan from "@/app/ui/card/new-scan";
 
 export default async function Home({searchParams}) {
   const page = searchParams["page"] || 1;
@@ -10,8 +10,8 @@ export default async function Home({searchParams}) {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <NewScanButton  />
-        <CardBoard scans={paginatedScans}/>
+        <NewScan  />
+        <Table scans={paginatedScans}/>
       </main>
       <footer className={styles.footer}>
       </footer>

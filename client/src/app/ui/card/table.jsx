@@ -12,7 +12,7 @@ import Pagination from "@/app/ui/card/pagination";
 import Modal from "@/app/ui/modal/modal";
 
 
-const CardBoard = ({scans}) => {
+const Table = ({scans}) => {
   const { replace } = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -52,7 +52,7 @@ const CardBoard = ({scans}) => {
   const cards = getCards(scans);
 
   return (
-    <div className={styles.cardboard}>
+    <div className={styles.table}>
       <h1>Previous scans</h1>
       <p className={styles.title}>- - - - </p>
       {cards}
@@ -72,4 +72,4 @@ const CardBoard = ({scans}) => {
   )
 };
 
-export default CardBoard;
+export default Table;
