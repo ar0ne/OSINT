@@ -17,6 +17,7 @@ def get_paginated(
 ) -> ScanPagination:
     """returns page of scans"""
     query = db_session.query(Scan)
+    query = query.order_by(Scan.created_at.desc())
     if not page:
         page = 1
     if not items_per_page:

@@ -55,7 +55,6 @@ def get_scan(
 def create_scan(
     db_session: DbSession,
     scan_in: ScanCreate,
-    
 ):
     """Creates new scan"""
     scan = create(db_session=db_session, scan_in=scan_in)

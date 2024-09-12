@@ -1,7 +1,7 @@
 import styles from "./page.module.css";
 import Table from "@/app/ui/card/table";
-import { fetchScanPage } from "@/app/lib/data";
 import NewScan from "@/app/ui/card/new-scan";
+import { fetchScanPage } from "@/app/lib/data";
 
 export default async function Home({searchParams}) {
   const page = searchParams["page"] || 1;

@@ -39,7 +39,7 @@
 .pagination {
   display: flex;
   flex-direction: row;
-  gap: 5em;
+  gap: 1em;
   align-content: center;
   align-items: center;
   justify-content: center;
@@ -66,4 +66,9 @@
 .cards {
   display: flex;
   flex-direction: column;
+}
+
+.form input{
+  background-color: #000;
+  margin: 1em 0;
 }

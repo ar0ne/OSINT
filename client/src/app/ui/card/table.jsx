@@ -50,6 +50,8 @@ const Table = ({scans}) => {
   };
 
   const cards = getCards(scans);
+  const totalPages = scans ? Math.floor(scans.total / scans.count) : 0;
+  const currentPage = scans ? scans.page : 1
 
   return (
     <div className={styles.table}>
@@ -64,8 +66,8 @@ const Table = ({scans}) => {
           <CardDetails {...card} />
         </Modal>}
       <Pagination
-        totalPages={scans.total / scans.count}
-        currentPage={scans.page}
+        totalPages={totalPages}
+        currentPage={currentPage}
         onClick={(p) => replace(`${pathname}?page=${p}`)}
       />
     </div>

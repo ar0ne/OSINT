@@ -3,14 +3,13 @@
 import Modal from "@/app/ui/modal/modal";
 import {useState} from "react";
 import Button from "@/app/ui/button";
+import Form from "@/app/ui/card/create-form"; 
 
 
 export default function NewScan ({onClick}) {
-
   const [open, setOpen] = useState(false);
-
   return (
-    <div>
+    <>
       <Button 
         onClick={() => setOpen(true)}
         >
@@ -21,8 +20,8 @@ export default function NewScan ({onClick}) {
         onClose={() => setOpen(false)}
         title="New Scan"
       >
-        <p>Hello long text as child</p>
+        <Form onClose={() => setOpen(false)} />
       </Modal>
-    </div>
+    </>
   );
 }

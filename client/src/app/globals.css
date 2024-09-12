@@ -52,3 +52,23 @@ button {
 button:hover {
   opacity: 1;
 }
+
+select {
+  color: #149414;
+  margin: 1em 0;
+  background-color: #000;
+  border-bottom-color: #9ccc9c;
+}
+select:invalid {
+  color: #149414; 
+}
+select:valid { 
+  color: #149414;
+}
+input {
+  color: #149414;
+  border: 1px solid #9ccc9c;
+}
+option:disabled {
+  color: #149414;
+}
