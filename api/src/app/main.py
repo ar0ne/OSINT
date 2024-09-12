@@ -4,8 +4,8 @@ from typing import Final, Optional
 from uuid import uuid1
 
 from fastapi import FastAPI, status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-
 from sqlalchemy.orm import scoped_session
 from starlette.requests import Request
 from starlette.routing import compile_path
@@ -35,6 +35,17 @@ api = FastAPI(
     docs_url=None,
     openapi_url="/docs/openapi.json",
     redoc_url="/docs",
+)
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
