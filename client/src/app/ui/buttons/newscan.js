@@ -1,14 +1,27 @@
 'use client'
 
-import styles from "@/app/ui/buttons/buttons.module.css";
+import Modal from "@/app/ui/modal/modal";
+import {useState} from "react";
 
 
 export default function NewScanButton ({onClick}) {
+
+  const [open, setOpen] = useState(false);
+
   return (
-    <button
-      className={styles.button}
-      onClick={onClick}
-    >New Scan
-    </button>
+    <div>
+      <button 
+        onClick={() => setOpen(true)}
+        >
+        New scan
+      </button>
+      <Modal 
+        isOpen={open} 
+        onClose={() => setOpen(false)}
+        title="New Scan"
+      >
+        <p>Hello long text as child</p>
+      </Modal>
+    </div>
   );
 }

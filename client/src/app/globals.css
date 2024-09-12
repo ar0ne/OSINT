@@ -18,10 +18,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-button {
-  color: #149414;
-}
-
 .bold {
   font-family: var(--font-hack-bold);
 }
@@ -41,4 +37,18 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+button {
+  margin: 1em;
+  padding: 0.7em;
+  background-color: #000;
+  border: 1px solid #9ccc9c;
+  opacity: 0.8;
+  transition: 0.3s;
+  color: #149414;
+}
+
+button:hover {
+  opacity: 1;
 }
