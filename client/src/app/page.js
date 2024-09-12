@@ -14,6 +14,7 @@ export default async function Home({searchParams}) {
         <Table scans={paginatedScans}/>
       </main>
       <footer className={styles.footer}>
+        <p>2024</p>
       </footer>
     </div>
   );

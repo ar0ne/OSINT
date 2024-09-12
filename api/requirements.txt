@@ -10,3 +10,4 @@ validators
 celery
 redis
 python-dotenv
+requests

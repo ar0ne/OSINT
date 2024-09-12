@@ -31,15 +31,7 @@
 }
 
 .footer {
-  grid-row-start: 3;
-  display: flex;
-  gap: 24px;
-}
-
-.footer a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  text-align: center;
 }
 
 /* Enable hover only on non-touch devices */

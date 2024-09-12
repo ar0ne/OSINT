@@ -72,3 +72,8 @@
   background-color: #000;
   margin: 1em 0;
 }
+
+.scandetails {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
