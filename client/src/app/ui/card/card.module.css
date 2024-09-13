@@ -71,9 +71,22 @@
 .form input{
   background-color: #000;
   margin: 1em 0;
+  padding: 0.2em;
+}
+
+.form select {
+  padding: 0.2em;
 }
 
 .scandetails {
   max-height: calc(100vh - 200px);
   overflow-y: auto;
+}
+
+@media (max-width: 600px) {
+
+  .column {
+    flex: 0 0;
+    flex-basis: 100%;
+  }
 }

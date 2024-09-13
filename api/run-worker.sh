@@ -1,6 +1,3 @@
+#!/bin/sh
 
-source .venv/bin/activate
-
-cd src
-
-celery -A app.tasks.celery worker --loglevel=info
+celery -A osint.tasks.celery worker --loglevel=info

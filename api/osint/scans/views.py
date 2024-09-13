@@ -2,8 +2,8 @@ import logging
 
 from fastapi import APIRouter, HTTPException, status
 
-from app.database.core import DbSession
-from app.models import PrimaryKey
+from osint.database.core import DbSession
+from osint.models import PrimaryKey
 
 from .models import ScanCreate, ScanPagination, ScanRead
 from .service import create, get, get_paginated

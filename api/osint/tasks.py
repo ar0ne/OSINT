@@ -10,8 +10,8 @@ CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
 CELERY_BACKEND_URL = os.environ.get("CELERY_BACKEND_URL")
 
 celery = Celery(
-    "app",
+    "osint",
     broker=CELERY_BROKER_URL,
     backend=CELERY_BACKEND_URL
 )
-celery.autodiscover_tasks(["app.scans.tasks"])
+celery.autodiscover_tasks(["osint.scans.tasks"])

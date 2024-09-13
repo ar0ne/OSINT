@@ -4,7 +4,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from starlette.responses import JSONResponse
 
-from app.scans.views import router as scans_router
+from osint.scans.views import router as scans_router
 
 
 class ErrorMessage(BaseModel):

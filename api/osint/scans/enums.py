@@ -1,4 +1,4 @@
-from app.enums import AppEnum
+from osint.enums import AppEnum
 
 
 class ScanStatus(AppEnum):

@@ -1,24 +1,22 @@
 import logging
-from typing import Dict, List, Tuple
+from typing import List, Tuple
 
 import requests
 
-from app.database.core import get_session
-from app.tasks import celery
+from osint.config import config
+from osint.database.core import get_session
+from osint.tasks import celery
 
-from .models import Scan, ScanStatus, ScanUpdate
+from .models import ScanStatus, ScanUpdate
 from .service import get, update
 
 log = logging.getLogger(__name__)
 
 
-THE_HARVESTER_URL = "http://0.0.0.0:8083"
-
-
 def get_sources(tool: str) -> List[str]:
     # TODO: not the best idea, since some sources require API key
     try:
-        sources = requests.get(f"{THE_HARVESTER_URL}/sources").json()["sources"]
+        sources = requests.get(f"{config.THE_HARVESTER_URL}/sources").json()["sources"]
         return ",".join(sources)
 
     except requests.exceptions.RequestException:
@@ -31,7 +29,7 @@ def get_data_from_external_api(tool: str, domain: str) -> Tuple[str, bool]:
     try:
         sources = get_sources(tool)
 
-        resp = requests.get(f"{THE_HARVESTER_URL}/query/?domain={domain}&source={sources}")
+        resp = requests.get(f"{config.THE_HARVESTER_URL}/query/?domain={domain}&source={sources}")
         resp.raise_for_status()
         return resp.content, True
     except Exception as err:

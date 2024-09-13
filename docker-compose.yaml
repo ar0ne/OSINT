@@ -42,13 +42,12 @@ services:
   #   depends_on:
   #     db:
   #       condition: service_healthy
-  #   # ports:
-  #   #   - "8888:8888"
+  #   ports:
+  #     - "8000:8000"
   #   environment:
   #     DB_HOST: db
   #     THE_HARVESTER_URL: http://theharvester:8083
-  #   expose:
-  #     - "8888"
+
   #
   # client:
   #   build:

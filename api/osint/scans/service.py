@@ -2,7 +2,7 @@ from typing import Optional
 
 from sqlalchemy_filters import apply_pagination
 
-from app import config
+from osint import config
 
 from .models import Scan, ScanCreate, ScanPagination, ScanStatus, ScanUpdate
 

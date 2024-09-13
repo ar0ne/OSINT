@@ -5,8 +5,8 @@ from pydantic import validator
 from sqlalchemy import Column, Integer, String
 from validators.domain import domain
 
-from app.database.core import Base
-from app.models import AppBaseModel, Pagination, PrimaryKey, TimeStampMixin
+from osint.database.core import Base
+from osint.models import AppBaseModel, Pagination, PrimaryKey, TimeStampMixin
 
 from .enums import ScanStatus
 

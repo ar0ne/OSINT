@@ -29,8 +29,8 @@ app = FastAPI(exception_handlers=exception_handlers, openapi_url="")
 
 
 api = FastAPI(
-    title="X web app",
-    description="Welcome to X's API documentation!",
+    title="OSINT web app",
+    description="Welcome to OSINT's API documentation!",
     root_path="/api/v1",
     docs_url=None,
     openapi_url="/docs/openapi.json",
