@@ -3,9 +3,10 @@ from typing import List, Tuple
 
 import requests
 
-from osint.config import config
+from osint import config
 from osint.database.core import get_session
 from osint.tasks import celery
+from osint.tools import service as tool_service
 
 from .models import ScanStatus, ScanUpdate
 from .service import get, update
@@ -46,9 +47,11 @@ def schedule_scan(*, scan_id: str) -> bool:
         scan = get(db_session=db_session, scan_id=scan_id)
         scan = update(db_session=db_session, scan=scan, scan_in=ScanUpdate(
             data=None, status=ScanStatus.in_progress))
-        domain, tool = scan.domain, scan.tool
+        domain, tool_id = scan.domain, scan.tool_id
+        tool = tool_service.get(db_session=db_session, tool_id=tool_id)
+        tool_name = tool.name
 
-    data, success = get_data_from_external_api(tool, domain)
+    data, success = get_data_from_external_api(tool_name, domain)
 
     scan_in = ScanUpdate(
         data=data,
@@ -58,5 +61,5 @@ def schedule_scan(*, scan_id: str) -> bool:
     with get_session() as db_session:
         scan = update(db_session=db_session, scan=scan, scan_in=scan_in)
 
-    log.info(f"Finished scanning for {domain} with {tool}")
+    log.info(f"Finished scanning for {domain} with {tool_name}")
     return success

@@ -10,8 +10,8 @@ const isNumber = function isNumber(value) {
 export const fetchScanPage = async (page) => {
   try {
     const pageNumber = isNumber(page) ? page : 1;
-    const data = await axios.get(API_URL + "/scans/?page=" + pageNumber).
-      then(response => response.data);
+    const data = await axios.get(API_URL + "/scans/?page=" + pageNumber).then(
+      response => response.data);
     return data; 
   } catch (error) {
     console.log(error);
@@ -30,3 +30,15 @@ export const fetchScanData = async (scan_id) => {
   }
   return null;
 };
+
+
+export const fetchTools = async () => {
+  try {
+    return await axios.get(
+      API_URL + "/tools"
+    ).then(resp => resp.data.data);
+  } catch (error) {
+    console.log(error);
+  }
+  return [];
+}

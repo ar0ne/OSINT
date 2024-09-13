@@ -6,7 +6,7 @@ import Button from "@/app/ui/button";
 import Form from "@/app/ui/card/create-form"; 
 
 
-export default function NewScan ({onClick}) {
+export default function NewScan ({tools, onClick}) {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -20,7 +20,10 @@ export default function NewScan ({onClick}) {
         onClose={() => setOpen(false)}
         title="New Scan"
       >
-        <Form onClose={() => setOpen(false)} />
+        <Form 
+          onClose={() => setOpen(false)}
+          tools={tools}
+        />
       </Modal>
     </>
   );

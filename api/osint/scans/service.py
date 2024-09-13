@@ -38,7 +38,7 @@ def create(*, db_session, scan_in: ScanCreate) -> Scan:
     """Create a new scan"""
     scan = Scan(
         domain=scan_in.domain,
-        tool=scan_in.tool,
+        tool_id=scan_in.tool_id,
         status=ScanStatus.new,
     )
 

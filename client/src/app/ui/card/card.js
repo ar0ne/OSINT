@@ -29,7 +29,7 @@ export default function Card ({id, status, domain, tool, created_at, onClick}) {
           Tool: 
         </div>
         <div className={styles.column}>
-          {tool}
+          {tool?.name}
         </div>
       </div>
       <div className={styles.row}>

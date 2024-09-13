@@ -7,7 +7,7 @@ import { useFormStatus, useFormState } from 'react-dom';
 import styles from "@/app/ui/card/card.module.css";
 
 
-export default function Form({onClose}) {
+export default function Form({onClose, tools}) {
 
   const initialState = {message: null, errors: {}};
   const [state, formAction] = useFormState(createScan, initialState);
@@ -17,9 +17,6 @@ export default function Form({onClose}) {
     router.refresh();
     onClose();
   };
-
-  // TODO: take it from 
-  const TOOLS = ["theHarvester"];
 
   if (!state) return;
   
@@ -43,9 +40,9 @@ export default function Form({onClose}) {
             <option value="" disabled>
               Select a tool
             </option>
-            {TOOLS.map((t) => (
-              <option key={t} value={t}>
-                {t}
+            {tools && tools.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.name}
               </option>
             ))}
             </select>

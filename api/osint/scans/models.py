@@ -3,10 +3,12 @@ from typing import List, Optional
 
 from pydantic import validator
 from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 from validators.domain import domain
 
 from osint.database.core import Base
 from osint.models import OsintBaseModel, Pagination, PrimaryKey, TimeStampMixin
+from osint.tools.models import ToolRead
 
 from .enums import ScanStatus
 
@@ -17,6 +19,7 @@ class Scan(Base, TimeStampMixin):
     data = Column(String, nullable=True)
     domain = Column(String, nullable=False)
     tool_id = Column(Integer, ForeignKey("tool.id"), nullable=True)
+    tool = relationship("Tool", foreign_keys=[tool_id])
 
 
 class ScanRead(OsintBaseModel):
@@ -24,7 +27,7 @@ class ScanRead(OsintBaseModel):
     status: str
     data: Optional[str]
     domain: str
-    tool: str
+    tool: Optional[ToolRead]
     created_at: Optional[datetime]
     updated_at: Optional[datetime]
 
@@ -33,8 +36,8 @@ class ScanReadMinimal(OsintBaseModel):
     id: PrimaryKey
     status: str
     domain: str
-    tool: str
     created_at: Optional[datetime]
+    tool: Optional[ToolRead]
 
 
 class ScanPagination(Pagination):
@@ -43,7 +46,7 @@ class ScanPagination(Pagination):
 
 class ScanCreate(OsintBaseModel):
     domain: str
-    tool: str
+    tool_id: int
 
     @validator("domain")
     def domain_required(cls, v):
