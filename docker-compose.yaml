@@ -17,6 +17,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - osintnetwork
 
   redis:
     container_name: redis
@@ -29,12 +31,16 @@ services:
       retries: 5
     ports:
       - "6379:6379"
+    networks:
+      - osintnetwork
 
   theharvester:
     build:
       context: tools/theHarvester
     ports:
       - "8083:80"
+    networks:
+      - osintnetwork
 
   api:
     build:
@@ -49,6 +55,8 @@ services:
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_BACKEND_URL: redis://redis:6379/0
       THE_HARVESTER_URL: http://theharvester
+    networks:
+      - osintnetwork
 
   worker:
     build:
@@ -62,6 +70,8 @@ services:
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_BACKEND_URL: redis://redis:6379/0
       THE_HARVESTER_URL: http://theharvester
+    networks:
+      - osintnetwork
 
   client:
     build:
@@ -71,9 +81,19 @@ services:
     depends_on:
       - api
     environment:
-      NEXT_PUBLIC_HOST_URL: http://api:8000/api/v1
+      NEXT_PUBLIC_HOST_URL: http://172.28.0.1:8000/api/v1
       HOST_URL: http://api:8000/api/v1
+    networks:
+      - osintnetwork
 
 
 volumes:
   scanapp_db:
+
+networks:
+  osintnetwork:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+          gateway: 172.28.0.1
