@@ -28,7 +28,7 @@ export async function createScan (prevState, formData) {
 
   const { tool, domain } = validatedFields.data;
 
-  var result = await axios.post(HOST_URL + "/scans/", 
+  var result = await axios.post(HOST_URL + "/scans", 
     {tool_id: tool, domain: domain}
   ).then(resp => resp.data
   ).catch(err => err.response);

@@ -1,8 +1,10 @@
+from datetime import datetime, timedelta
 from typing import Optional
 
 from sqlalchemy_filters import apply_pagination
 
 from osint import config
+from osint.database.core import DbSession
 
 from .models import Scan, ScanCreate, ScanPagination, ScanStatus, ScanUpdate
 
@@ -10,6 +12,20 @@ from .models import Scan, ScanCreate, ScanPagination, ScanStatus, ScanUpdate
 def get(*, db_session, scan_id: int) -> Optional[Scan]:
     """Returns a scan based on the given id."""
     return db_session.query(Scan).filter(Scan.id == scan_id).first()
+
+
+def get_last_x_hours_by_domain(
+    *, db_session: DbSession, domain: str, hours: int
+) -> Optional[Scan]:
+    """Returns a scan for domain"""
+    now = datetime.utcnow()
+    return (
+        db_session.query(Scan)
+        .filter(Scan.domain == domain)
+        .filter(Scan.status == ScanStatus.succeeded)
+        .filter(Scan.updated_at >= now - timedelta(hours=hours))
+        .first()
+    )
 
 
 def get_paginated(
@@ -34,7 +50,7 @@ def get_paginated(
     }
 
 
-def create(*, db_session, scan_in: ScanCreate) -> Scan:
+def create(*, db_session: DbSession, scan_in: ScanCreate) -> Scan:
     """Create a new scan"""
     scan = Scan(
         domain=scan_in.domain,
@@ -48,7 +64,7 @@ def create(*, db_session, scan_in: ScanCreate) -> Scan:
     return scan
 
 
-def update(*, db_session, scan: Scan, scan_in: ScanUpdate) -> Scan:
+def update(*, db_session: DbSession, scan: Scan, scan_in: ScanUpdate) -> Scan:
 
     scan.data = scan_in.data
     scan.status = scan_in.status

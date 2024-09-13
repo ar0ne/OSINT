@@ -1,13 +1,14 @@
 import logging
 from typing import Tuple
 
+from osint import config
 from osint.database.core import get_session
 from osint.tasks import celery
 from osint.tools import service as tool_service
 from osint.tools.clients import DataClientFactory
 
 from .models import ScanStatus, ScanUpdate
-from .service import get, update
+from .service import get, get_last_x_hours_by_domain, update
 
 log = logging.getLogger(__name__)
 
@@ -34,6 +35,16 @@ def schedule_scan(*, scan_id: str) -> bool:
         scan = update(db_session=db_session, scan=scan, scan_in=ScanUpdate(
             data=None, status=ScanStatus.in_progress))
         domain, tool_id = scan.domain, scan.tool_id
+        if (existing_scan := get_last_x_hours_by_domain(
+            db_session=db_session, domain=domain, hours=config.SCAN_RESULT_ACTUAL_TIME
+        )):
+            log.info(f"Found scan results for this {domain=}")
+            scan = update(
+                db_session=db_session,
+                scan=scan,
+                scan_in=ScanUpdate(data=existing_scan.data, status=existing_scan.status)
+            )
+            return True
         tool = tool_service.get(db_session=db_session, tool_id=tool_id)
         tool_name = tool.name
 

@@ -11,7 +11,7 @@ const isNumber = function isNumber(value) {
 export const fetchScanPage = async (page) => {
   try {
     const pageNumber = isNumber(page) ? page : 1;
-    const data = await axios.get(API_URL + "/scans/?page=" + pageNumber).then(
+    const data = await axios.get(API_URL + "/scans?page=" + pageNumber).then(
       response => response.data);
     return data; 
   } catch (error) {
