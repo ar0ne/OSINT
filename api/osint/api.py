@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from starlette.responses import JSONResponse
 
 from osint.scans.views import router as scans_router
+from osint.tools.views import router as tools_router
 
 
 class ErrorMessage(BaseModel):
@@ -28,5 +29,8 @@ api_router = APIRouter(
 
 
 api_router.include_router(
-    scans_router, prefix="/scans", tags=["scans"]
+    scans_router, prefix="/scans", tags=["scans"],
+)
+api_router.include_router(
+    tools_router, prefix="/tools", tags=["tools"],
 )

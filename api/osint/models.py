@@ -7,7 +7,7 @@ from sqlalchemy import Column, DateTime, event
 PrimaryKey = conint(gt=0, lt=2147483647)
 
 
-class AppBaseModel(BaseModel):
+class OsintBaseModel(BaseModel):
     class Config:
         from_attributes = True
         validate_assignment = True
@@ -37,7 +37,7 @@ class TimeStampMixin(object):
         event.listen(cls, "before_update", cls._updated_at)
 
 
-class Pagination(AppBaseModel):
+class Pagination(OsintBaseModel):
     count: int
     page: int
     total: int
