@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const API_URL = process.env.NEXT_PUBLIC_HOST_URL;
+const API_URL = process.env.HOST_URL;
 
 const isNumber = function isNumber(value) {
    return typeof value === 'number' && isFinite(value);

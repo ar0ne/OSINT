@@ -14,6 +14,4 @@ RUN pip install --user -r requirements.txt
 
 COPY --chown=admin:admin . .
 
-EXPOSE 8888
-
-ENTRYPOINT ["sh", "run.sh"]
+ENTRYPOINT ["sh", "run-worker.sh"]

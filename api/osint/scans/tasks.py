@@ -1,12 +1,10 @@
 import logging
-from typing import List, Tuple
+from typing import Tuple
 
-import requests
-
-from osint import config
 from osint.database.core import get_session
 from osint.tasks import celery
 from osint.tools import service as tool_service
+from osint.tools.clients import DataClientFactory
 
 from .models import ScanStatus, ScanUpdate
 from .service import get, update
@@ -14,28 +12,16 @@ from .service import get, update
 log = logging.getLogger(__name__)
 
 
-def get_sources(tool: str) -> List[str]:
-    # TODO: not the best idea, since some sources require API key
+def get_data_from_external_api(tool: str, domain: str) -> Tuple[str | None, bool]:
+    log.info(f"Call {tool} API")
+    client = DataClientFactory.get_client(tool)
     try:
-        sources = requests.get(f"{config.THE_HARVESTER_URL}/sources").json()["sources"]
-        return ",".join(sources)
-
-    except requests.exceptions.RequestException:
-        pass
-    return []
-
-
-def get_data_from_external_api(tool: str, domain: str) -> Tuple[str, bool]:
-    log.info("Call external API")
-    try:
-        sources = get_sources(tool)
-
-        resp = requests.get(f"{config.THE_HARVESTER_URL}/query/?domain={domain}&source={sources}")
-        resp.raise_for_status()
-        return resp.content, True
+        data = client.get_data(domain)
+        return data, True
     except Exception as err:
+        # ignore any errors and hide them from user
         log.warning(err)
-    return "", False
+    return None, False
 
 
 @celery.task(name="schedule_scan")

@@ -37,8 +37,10 @@ api = FastAPI(
     redoc_url="/docs",
 )
 origins = [
-    "http://localhost",
-    "http://localhost:3000",
+    "http://0.0.0.0",
+    "http://0.0.0.0:3000",
+    "http://client",
+    "http://client:3000",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -72,29 +74,7 @@ _request_id_ctx_var: ContextVar[Optional[str]] = ContextVar(REQUEST_ID_CTX_KEY, 
 async def db_session_middleware(request: Request, call_next):
     request_id = str(uuid1())
 
-    # we create a per-request id such that we can ensure that our session is scoped for a particular request.
-    # see: https://github.com/tiangolo/fastapi/issues/726
     ctx_token = _request_id_ctx_var.set(request_id)
-    # path_params = get_path_params_from_request(request)
-
-    # # if this call is organization specific set the correct search path
-    # organization_slug = path_params.get("organization", "default")
-    # request.state.organization = organization_slug
-    # schema = f"dispatch_organization_{organization_slug}"
-    # # validate slug exists
-    # schema_names = inspect(engine).get_schema_names()
-    # if schema in schema_names:
-    #     # add correct schema mapping depending on the request
-    #     schema_engine = engine.execution_options(
-    #         schema_translate_map={
-    #             None: schema,
-    #         }
-    #     )
-    # else:
-    #     return JSONResponse(
-    #         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-    #         content={"detail": [{"msg": f"Unknown database schema name: {schema}"}]},
-    #     )
 
     try:
         session = scoped_session(sessionmaker(engine), scopefunc=get_request_id)
