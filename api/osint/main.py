@@ -39,6 +39,8 @@ api = FastAPI(
 origins = [
     "http://0.0.0.0",
     "http://0.0.0.0:3000",
+    "http://localhost",
+    "http://localhost:3000",
     "http://client",
     "http://client:3000",
 ]

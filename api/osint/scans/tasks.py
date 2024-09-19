@@ -4,7 +4,6 @@ from typing import Tuple
 from osint import config
 from osint.database.core import get_session
 from osint.tasks import celery
-from osint.tools import service as tool_service
 from osint.tools.clients import DataClientFactory
 
 from .models import ScanStatus, ScanUpdate
@@ -28,25 +27,24 @@ def get_data_from_external_api(tool: str, domain: str) -> Tuple[str | None, bool
 @celery.task(name="schedule_scan")
 def schedule_scan(*, scan_id: str) -> bool:
     """Complete a scan"""
-    log.info("Scan scheduler")
+    log.info(f"Start scanning for {scan_id=}")
 
     with get_session() as db_session:
         scan = get(db_session=db_session, scan_id=scan_id)
         scan = update(db_session=db_session, scan=scan, scan_in=ScanUpdate(
             data=None, status=ScanStatus.in_progress))
-        domain, tool_id = scan.domain, scan.tool_id
+        domain = scan.domain
         if (existing_scan := get_last_x_hours_by_domain(
             db_session=db_session, domain=domain, hours=config.SCAN_RESULT_ACTUAL_TIME
         )):
-            log.info(f"Found scan results for this {domain=}")
+            log.info(f"Found recent scan result for the {domain=}")
             scan = update(
                 db_session=db_session,
                 scan=scan,
                 scan_in=ScanUpdate(data=existing_scan.data, status=existing_scan.status)
             )
             return True
-        tool = tool_service.get(db_session=db_session, tool_id=tool_id)
-        tool_name = tool.name
+        tool_name = scan.tool.name
 
     data, success = get_data_from_external_api(tool_name, domain)
 
